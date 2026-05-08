@@ -1,0 +1,10 @@
+node_modules
+dist
+.vite
+.git
+.github
+Dockerfile
+docker-compose.yml
+docker-compose.dev.yml
+README.md
+

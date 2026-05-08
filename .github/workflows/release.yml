@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate action metadata
+        if: hashFiles('action.yml') != ''
+        uses: rhysd/actionlint@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+      - run: tar -czf dist.tar.gz dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist.tar.gz
+

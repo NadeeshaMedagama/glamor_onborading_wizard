@@ -13,6 +13,6 @@ jobs:
     if: hashFiles('action.yml') != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: rhysd/actionlint@v1
 

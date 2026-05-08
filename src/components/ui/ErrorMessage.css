@@ -1,0 +1,20 @@
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
+  font-size: 0.8rem;
+  color: var(--text-error);
+  animation: errorFadeIn 0.2s ease;
+}
+
+.error-message__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+@keyframes errorFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

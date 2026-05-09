@@ -1,0 +1,19 @@
+.personal-info {
+  animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.personal-info__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.personal-info__subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}

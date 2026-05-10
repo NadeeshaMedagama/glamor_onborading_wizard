@@ -1,0 +1,87 @@
+/**
+ * @module components/steps/Success
+ * @description Terminal success screen shown after the user submits.
+ *
+ * This is a one-way transition — the user cannot navigate back from it.
+ * The Wizard component hides all navigation controls when this screen
+ * is active.
+ *
+ * Includes:
+ * - Animated checkmark icon with pulsing ring
+ * - CSS confetti celebration
+ * - Summary details (name, role, department, skill count)
+ */
+
+import type { WizardData } from '../../types';
+import './Success.css';
+
+interface SuccessProps {
+  data: WizardData;
+}
+
+const CONFETTI_COLORS = ['#7c5cfc', '#00d4aa', '#ff6b8a', '#ffb84d', '#4dd0e1', '#b388ff'];
+
+export default function Success({ data }: SuccessProps) {
+  const { personalInfo, skillsAvatar } = data;
+
+  return (
+    <div className="success" role="status" aria-live="polite">
+      {/* Confetti particles (decorative) */}
+      <div className="success__confetti" aria-hidden="true">
+        {Array.from({ length: 24 }).map((_, i) => (
+          <div
+            key={i}
+            className="success__confetti-piece"
+            style={{
+              left: `${5 + Math.random() * 90}%`,
+              backgroundColor: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+              animationDelay: `${Math.random() * 1.5}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+              width: `${6 + Math.random() * 6}px`,
+              height: `${6 + Math.random() * 6}px`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Animated checkmark */}
+      <div className="success__icon-ring">
+        <svg
+          className="success__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+
+      <h2 className="success__title">Welcome Aboard!</h2>
+      <p className="success__message">
+        <span className="success__name">{personalInfo.fullName}</span> has been
+        successfully added to the team as a{' '}
+        <strong>{personalInfo.role}</strong> in the{' '}
+        <strong>{personalInfo.department}</strong> department.
+      </p>
+
+      <div className="success__details">
+        <div className="success__detail">
+          <div className="success__detail-label">Role</div>
+          <div className="success__detail-value">{personalInfo.role}</div>
+        </div>
+        <div className="success__detail">
+          <div className="success__detail-label">Department</div>
+          <div className="success__detail-value">{personalInfo.department}</div>
+        </div>
+        <div className="success__detail">
+          <div className="success__detail-label">Skills</div>
+          <div className="success__detail-value">{skillsAvatar.selectedSkills.length}</div>
+        </div>
+      </div>
+    </div>
+  );
+}

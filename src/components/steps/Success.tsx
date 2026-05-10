@@ -12,6 +12,7 @@
  * - Summary details (name, role, department, skill count)
  */
 
+import { useMemo } from 'react';
 import type { WizardData } from '../../types';
 import './Success.css';
 
@@ -20,26 +21,69 @@ interface SuccessProps {
 }
 
 const CONFETTI_COLORS = ['#7c5cfc', '#00d4aa', '#ff6b8a', '#ffb84d', '#4dd0e1', '#b388ff'];
+const CONFETTI_PIECES = 24;
+
+type ConfettiPiece = {
+  left: string;
+  backgroundColor: string;
+  animationDelay: string;
+  animationDuration: string;
+  width: string;
+  height: string;
+};
+
+const hashString = (value: string): number => {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+};
+
+const createSeededRandom = (seed: number) => {
+  let value = seed % 2147483647;
+  if (value <= 0) {
+    value += 2147483646;
+  }
+  return () => {
+    value = (value * 16807) % 2147483647;
+    return (value - 1) / 2147483646;
+  };
+};
 
 export default function Success({ data }: SuccessProps) {
   const { personalInfo, skillsAvatar } = data;
+  const confettiPieces = useMemo<ConfettiPiece[]>(() => {
+    const seed = hashString(
+      `${personalInfo.fullName}|${personalInfo.role}|${personalInfo.department}|${skillsAvatar.selectedSkills.length}`
+    );
+    const seededRandom = createSeededRandom(seed || 1);
+
+    return Array.from({ length: CONFETTI_PIECES }, (_, i) => ({
+      left: `${5 + seededRandom() * 90}%`,
+      backgroundColor: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+      animationDelay: `${seededRandom() * 1.5}s`,
+      animationDuration: `${2 + seededRandom() * 2}s`,
+      width: `${6 + seededRandom() * 6}px`,
+      height: `${6 + seededRandom() * 6}px`,
+    }));
+  }, [
+    personalInfo.fullName,
+    personalInfo.role,
+    personalInfo.department,
+    skillsAvatar.selectedSkills.length,
+  ]);
 
   return (
     <div className="success" role="status" aria-live="polite">
       {/* Confetti particles (decorative) */}
       <div className="success__confetti" aria-hidden="true">
-        {Array.from({ length: 24 }).map((_, i) => (
+        {confettiPieces.map((piece, i) => (
           <div
             key={i}
             className="success__confetti-piece"
-            style={{
-              left: `${5 + Math.random() * 90}%`,
-              backgroundColor: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
-              animationDelay: `${Math.random() * 1.5}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-              width: `${6 + Math.random() * 6}px`,
-              height: `${6 + Math.random() * 6}px`,
-            }}
+            style={piece}
           />
         ))}
       </div>

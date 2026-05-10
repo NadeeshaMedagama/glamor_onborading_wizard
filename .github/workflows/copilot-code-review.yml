@@ -12,6 +12,6 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: github/copilot-code-review@v1
+      - uses: github/copilot-code-review@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

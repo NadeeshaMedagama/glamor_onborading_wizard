@@ -15,5 +15,5 @@ jobs:
       - uses: actions/checkout@v6
       - id: action_exists
         run: echo "exists=$([ -f action.yml ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
-      - uses: rhysd/actionlint@v1
+      - uses: rhysd/actionlint@v1.6.25
         if: steps.action_exists.outputs.exists == 'true'

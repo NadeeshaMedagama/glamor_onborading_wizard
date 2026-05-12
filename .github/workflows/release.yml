@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v1.2.3)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -11,11 +17,16 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ env.RELEASE_TAG }}
       - name: Validate action metadata
         if: hashFiles('action.yml') != ''
-        uses: rhysd/actionlint@v1
+        uses: rhysd/actionlint@v1.6.25
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
@@ -25,5 +36,6 @@ jobs:
       - run: tar -czf dist.tar.gz dist
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: ${{ env.RELEASE_TAG }}
           files: dist.tar.gz
-

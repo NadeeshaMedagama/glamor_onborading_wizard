@@ -17,6 +17,7 @@
 - [Edge Cases Handled](#edge-cases-handled)
 - [Trade-offs & Simplifications](#trade-offs--simplifications)
 - [What I Would Do Next](#what-i-would-do-next)
+- [Related](#related)
 - [Resources Used](#resources-used)
 
 ---
@@ -251,6 +252,12 @@ The visual design uses a **dark glassmorphism** theme with curated tokens define
 - Convert the skill grid to a scrollable horizontal strip on small screens
 - Use a bottom-sheet pattern for step contents on very small viewports
 - Increase touch targets for chips to 44×44px minimum
+
+---
+
+## Related
+
+- Live app: https://glamor-onborading-wizard.vercel.app/
 
 ---
 

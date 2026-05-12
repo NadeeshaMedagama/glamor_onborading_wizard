@@ -1,0 +1,33 @@
+name: "Glamor Onboarding Wizard Build"
+description: "Builds the Glamor Onboarding Wizard with npm."
+author: "Glamor"
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    default: "20"
+  install:
+    description: "Whether to install dependencies"
+    default: "true"
+  build:
+    description: "Whether to run the build"
+    default: "true"
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "${{ inputs.node-version }}"
+        cache: "npm"
+    - name: Install dependencies
+      if: "${{ inputs.install == 'true' }}"
+      run: "npm ci"
+      shell: bash
+    - name: Build project
+      if: "${{ inputs.build == 'true' }}"
+      run: "npm run build"
+      shell: bash
+branding:
+  icon: "package"
+  color: "purple"
+

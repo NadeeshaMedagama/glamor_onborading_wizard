@@ -63,6 +63,20 @@ npm run preview
 
 ---
 
+## GitHub Action (Marketplace)
+
+This repository also provides a composite GitHub Action that installs dependencies and builds the app.
+
+```yaml
+- uses: your-org/your-repo@v1
+  with:
+    node-version: "20"
+    install: "true"
+    build: "true"
+```
+
+---
+
 ## Project Structure
 
 ```

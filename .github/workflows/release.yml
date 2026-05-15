@@ -42,7 +42,7 @@ jobs:
         run: git checkout "refs/tags/${RELEASE_TAG}"
       - name: Validate action metadata
         if: hashFiles('action.yml') != ''
-        uses: rhysd/actionlint@v1.6.25
+        uses: rhysd/actionlint@v1.7.12
       - uses: actions/setup-node@v6
         with:
           node-version: "20"

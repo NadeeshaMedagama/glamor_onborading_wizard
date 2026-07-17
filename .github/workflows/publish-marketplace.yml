@@ -12,7 +12,7 @@ jobs:
   validate-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: action_exists
         run: echo "exists=$([ -f action.yml ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
       - uses: rhysd/actionlint@v1.7.12

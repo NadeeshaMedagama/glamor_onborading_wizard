@@ -43,7 +43,7 @@ jobs:
       - name: Validate action metadata
         if: hashFiles('action.yml') != ''
         uses: rhysd/actionlint@v1.7.12
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
